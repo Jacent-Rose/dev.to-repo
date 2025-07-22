@@ -77,7 +77,7 @@ class User extends ActiveRecord implements IdentityInterface
 
             // **Password Confirmation**
             ['password_confirmation', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match.'],
-            [['first_name', 'last_name'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Only letters and spaces are allowed.'],
+            [['name'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Only letters and spaces are allowed.'],
         ];
 
         return [
@@ -119,8 +119,6 @@ class User extends ActiveRecord implements IdentityInterface
             'profile_picture' => 'Profile Picture',
             'bio' => 'Bio',
             'created_at' => 'Created At',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
             'verification_token' => 'Verification Token',
         ];
     }
@@ -201,6 +199,10 @@ class User extends ActiveRecord implements IdentityInterface
         return false;
     }
 
-   
+    public function getProfilePictureUrl()
+    {
+        return Yii::getAlias('web/') . ($this->profile_picture ?: '/images/default.jpg');
+    }
+    
 
 }

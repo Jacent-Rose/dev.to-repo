@@ -33,7 +33,7 @@ $config = [
 
 
             'transport' => [
-                'dsn' => 'smtp://yourgmail@gmail.com:yourapppassword@smtp.gmail.com:587'
+                'dsn' => 'smtp://confirmemailtesting@gmail.com:atxnnozjrifqcmdv@smtp.gmail.com:587'
 
             ],
 

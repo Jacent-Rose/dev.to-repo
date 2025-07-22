@@ -171,28 +171,38 @@ class SiteController extends Controller
 
 
 
-    public function actionComment($slug)
+    public function actionComment($id)
     {
-        $article = Articles::find()->where(['slug' => $slug])->with(['comments.user'])->one();
+        $article = Articles::find()
+            ->where(['id' => $id])
+            ->with(['comments.user']) // Load comments and their users
+            ->one();
+    
         if (!$article) {
-            throw new NotFoundHttpException("Article not found.");
+            throw new \yii\web\NotFoundHttpException('Article not found.');
         }
-
+    
         $newComment = new Comments();
-        if ($newComment->load(Yii::$app->request->post())) {
-            $newComment->user_id = Yii::$app->user->id;
+    
+        if (!Yii::$app->user->isGuest && Yii::$app->request->isPost) {
+            $newComment->load(Yii::$app->request->post());
             $newComment->article_id = $article->id;
+            $newComment->user_id = Yii::$app->user->id;
             $newComment->created_at = date('Y-m-d H:i:s');
+    
             if ($newComment->save()) {
-                return $this->redirect(['site/index', 'slug' => $slug, '#' => 'comments']);
+                Yii::$app->session->setFlash('success', 'Comment posted successfully.');
+                return $this->redirect(['site/comment', 'id' => $id]);
             }
         }
-
+    
         return $this->render('comments', [
             'article' => $article,
+            'comments' => $article->comments,
             'newComment' => $newComment,
         ]);
     }
-
+    
+    
     
 }

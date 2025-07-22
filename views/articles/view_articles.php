@@ -17,7 +17,7 @@ $this->title = 'My Posts'; // Adjust title as needed
 
         <?php if (!empty($model)): ?>
             <?php usort($model, function ($a, $b) {
-                return $b->created_at - $a->created_at;
+                return strtotime($b->created_at) - strtotime($a->created_at);
             }); ?>
 
             <?php foreach ($model as $article): ?>
@@ -73,6 +73,6 @@ $this->title = 'My Posts'; // Adjust title as needed
             </div>
         <?php endif; ?>
 
-        
+
     </div>
 </div>

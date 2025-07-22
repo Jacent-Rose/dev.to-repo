@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\UploadedFile;
 
 /** @var yii\web\View $this */
 /** @var app\models\Articles $model */
@@ -16,25 +17,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                     <!-- DEV Logo -->
-                <a href="<?= Yii::$app->homeUrl ?>" style="margin-left: 10px;">
-                    <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-black.png"
-                        alt="DEV Logo"
-                        style="height: 38px; width: 45px; border-radius: 1px; ">
-                </a>
+                    <!-- DEV Logo -->
+                    <a href="<?= Yii::$app->homeUrl ?>" style="margin-left: 10px;">
+                        <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-black.png"
+                            alt="DEV Logo"
+                            style="height: 38px; width: 45px; border-radius: 1px; ">
+                    </a>
                     <span class="ml-2">Create Post</span>
                 </div>
                 <div>
-                    <?= Html::a('Edit', '#', ['class' => 'btn btn-light btn-sm']) ?>
+                    
                     <?= Html::a('Preview', '#', ['class' => 'btn btn-light btn-sm ml-2']) ?>
                 </div>
             </div>
 
             <div class="card shadow-sm p-3">
-                <?php $form = ActiveForm::begin(); ?>
+                <?php $form = ActiveForm::begin([
+                    'options' => ['enctype' => 'multipart/form-data'] // Enable file upload
+                ]); ?>
 
                 <div class="mb-3">
-                    <button type="button" class="btn btn-outline-secondary btn-sm">Add a cover image</button>
+                    <?= $form->field($model, 'cover_image_file')->fileInput()->label('Upload Cover Image') ?>
                 </div>
 
                 <?= $form->field($model, 'title')->textInput(['placeholder' => 'New post title here...'])->label(false) ?>
@@ -71,12 +74,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'content')->textarea(['rows' => 10, 'placeholder' => 'Write your post content here...'])->label(false) ?>
 
+                <!-- Display uploaded cover image preview if available -->
+                <?php if ($model->cover_image_file): ?>
+                    <div class="mb-3">
+                        <img src="<?= Yii::getAlias('@web') . '/cover_images/' . $model->cover_image_file ?>" class="img-fluid mb-3" style="max-height: 300px;" alt="Cover Image Preview">
+                    </div>
+                <?php endif; ?>
+
                 <hr class="my-4">
 
                 <div class="d-flex justify-content-start align-items-center">
                     <?= Html::submitButton('Publish', ['class' => 'btn btn-primary mr-2']) ?>
-                    <?= Html::button('Save draft', ['class' => 'btn btn-outline-secondary mr-2']) ?>
-                    <button type="button" class="btn btn-light btn-sm"><i class="fas fa-redo"></i> Revert new changes</button>
+                    
                 </div>
 
                 <?php ActiveForm::end(); ?>

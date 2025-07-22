@@ -35,6 +35,9 @@ class Articles extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+     
+
     public function rules()
     {
         return [
@@ -47,8 +50,25 @@ class Articles extends \yii\db\ActiveRecord
             [['title', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['cover_image_file'], 'file', 'extensions' => 'jpg, jpeg, png', 'skipOnEmpty' => true],
+        
         ];
+        
     }
+
+    public function uploadCoverImage()
+{
+    if ($this->validate()) {
+        $filename = uniqid() . '.' . $this->cover_image_file->extension;
+        $path = Yii::getAlias('@webroot/uploads/') . $filename;
+        if ($this->cover_image_file->saveAs($path)) {
+            $this->cover_image_file = $filename; // Assuming you have a `cover_image` DB field
+            return true;
+        }
+    }
+    return false;
+}
+
 
     /**
      * {@inheritdoc}
@@ -168,5 +188,9 @@ public function getCommentCount()
     return $this->getComments()->count();
 }
 
+public function getUser()
+{
+    return $this->getCreatedBy();
+}
 
 }

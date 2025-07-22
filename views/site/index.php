@@ -111,7 +111,7 @@ $this->title = 'Home — DevClone';
     }
 
     h5 a:hover {
-        color: #0d6efd;
+        color: #0d6efd !important;
         text-decoration: underline;
     }
 
@@ -158,6 +158,13 @@ $this->title = 'Home — DevClone';
     .filter-btn:hover {
         background-color: #fff;
         color: #0d6efd;
+    }
+
+    #profilepic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
     }
 </style>
 
@@ -245,10 +252,15 @@ $this->title = 'Home — DevClone';
 
         <div class="feed-container">
             <div class="filters">
-                <button class="filter-btn">Relevant</button>
-                <a href="articles/latest" class="filter-btn">Latest</a>
+                <button class="filter-btn">
+                    <a href="<?= Url::to(['articles/relevant']) ?>" class="filter-btn">Relevant</a>
+                </button>
+                <a href="../articles/latest" class="filter-btn">Latest</a>
 
-                <button class="filter-btn">Top</button>
+                <button class="filter-btn">
+                    <a href="<?= Url::to(['articles/top']) ?>" class="filter-btn">Top</a>
+
+                </button>
             </div>
 
             <div class="main-feed">
@@ -261,24 +273,40 @@ $this->title = 'Home — DevClone';
                             <div class="col post-card p-3 border rounded shadow-sm bg-white">
                                 <!-- 👤 User Info -->
                                 <div class="d-flex align-items-center mb-2">
-                                    <img src="<?= $article->createdBy->profile_picture ?? Yii::getAlias('web/images/default.jpg') ?>"
-                                        class="rounded-circle me-2" width="32" height="32" alt="Profile">
+                                    <div class="profilepic">
+                                        <?php if (!empty($article->createdBy->profile_picture)): ?>
+                                            <img src="<?= Url::to(['web/' . $article->createdBy->profile_picture]) ?>" alt="Profile Picture" class="" id="profilepic">
+                                        <?php else: ?>
+                                            <img src="<?= Url::to(['web/images/default.jpg']) ?>" class="" alt="Default" id="profilepic">
+                                        <?php endif; ?>
+                                    </div>
                                     <div>
+
+
                                         <div class="fw-medium"><?= Html::encode($article->createdBy->name ?? 'Unknown') ?></div>
                                         <small class="text-muted"><?= date('M j', strtotime($article->created_at)) ?></small>
                                     </div>
                                 </div>
 
-
+                                <?php if (!empty($article->cover_image_file)): ?>
+                                    <a href="<?= Url::to(['articles/read-more', 'id' => $article->id]) ?>">
+                                        <img src="<?= Yii::getAlias('@web') . '/web/cover_images/' . $article->cover_image_file ?>"
+                                            class="w-100 mb-3 rounded-top"
+                                            style="object-fit: cover; max-height: 400px;"
+                                            alt="Cover Image">
+                                    </a>
+                                <?php endif; ?>
 
                                 <!-- 📝 Title -->
-                                <h5 class="fw-bold mt-2 mb-1" style='color: #000;'>
-                                    <?= Html::a(
-                                        Html::encode($article->title),
-                                        ['article/view', 'slug' => $article->slug],
-                                        ['class' => 'text-dark text-decoration-none']
-                                    ) ?>
-                                </h5>
+                                <div class="post-title">
+                                    <h5 class="fw-bold mt-2 mb-1" style='color: #000;'>
+                                        <?= Html::a(
+                                            Html::encode($article->title),
+                                            ['articles/read-more', 'id' => $article->id],
+                                            ['class' => 'text-dark text-decoration-none']
+                                        ) ?>
+                                    </h5>
+                                </div>
 
                                 <!-- 🏷️ Hashtags -->
                                 <?php if (!empty($article->hashtags)): ?>
@@ -306,24 +334,20 @@ $this->title = 'Home — DevClone';
                                         <?= $article->getLikes()->where(['type' => 'love'])->count() ?>
                                     </span>
 
-                                    <a href="<?= Url::to(['site/comment', 'slug' => $article->slug]) ?>#comments" class="text-decoration-none text-muted me-3">
+                                    <a href="<?= Url::to(['site/comment', 'id' => $article->id]) ?>" class="text-decoration-none text-muted me-3">
                                         <i class="fa fa-comment"></i> <?= $article->commentCount ?? 0 ?> comments
                                     </a>
+
                                     <span class="me-auto"><?= ceil(str_word_count(strip_tags($article->content)) / 200) ?> min read</span>
                                     <a href="<?= Url::to(['article/bookmark', 'id' => $article->id]) ?>" class="text-decoration-none">
                                         <i class="fa <?= $article->isBookmarkedByUser ? 'fa-bookmark' : 'fa-bookmark-o' ?> text-muted"></i>
                                     </a>
                                 </div>
 
-                                <!-- 🖼️ Post Image -->
-                                <?php if (!empty($article->image_path)): ?>
-                                    <img src="<?= Yii::getAlias('@web/' . $article->image_path) ?>" class="img-fluid rounded mb-2" alt="Post image">
-                                <?php endif; ?>
 
-                                <!-- 📄 Content preview -->
-                                <p class="card-text">
-                                    <?= Html::encode(mb_substr(strip_tags($article->content), 0, 200)) ?>...
-                                </p>
+
+
+
 
 
                             </div>

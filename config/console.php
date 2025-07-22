@@ -14,6 +14,18 @@ $config = [
         '@tests' => '@app/tests',
     ],
     'components' => [
+        'mailer' => [
+            'class' => yii\symfonymailer\Mailer::class,
+            'viewPath' => '@app/mail',
+            'useFileTransport' => false, // Set to true to save emails as files instead of sending
+
+
+            'transport' => [
+                'dsn' => 'smtp://confirmemailtesting@gmail.com:atxnnozjrifqcmdv@smtp.gmail.com:587'
+
+            ],
+
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

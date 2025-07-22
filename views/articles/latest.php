@@ -246,7 +246,7 @@ $this->title = 'Home — DevClone';
         <div class="feed-container">
             <div class="filters">
                 <button class="filter-btn">Relevant</button>
-                <a href="articles/latest" class="filter-btn">Latest</a>
+                <a href="@app/views/site/index" class="filter-btn">Latest</a>
 
                 <button class="filter-btn">Top</button>
             </div>
