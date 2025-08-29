@@ -27,20 +27,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     nav.navbar .navbar-nav .nav-item:focus {
         background-color: transparent !important;
     }
-
-    /* Make sure the search form aligns with the navbar items */
-.navbar .navbar-collapse form {
-    display: flex;
-    align-items: center;  /* vertical center */
-    margin-top: 0 !important; /* reset inline offset */
-    margin-bottom: 0 !important;
-}
-
-.footer > .container {
-    margin-top: 50px !important;  /* space inside footer container */
-}
-
-
 </style>
 
 <?php $this->beginPage() ?>
@@ -51,8 +37,27 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <title><?= Html::encode($this->title) ?></title>
 <?php $this->head() ?>
 
+<style>
+    .dropdown-toggle::after {
+        display: none !important;
+    }
 
-<body class="d-flex flex-column h-50">
+    nav.navbar .navbar-nav .nav-item:hover,
+    nav.navbar .navbar-nav .nav-item:focus {
+        background-color: transparent !important;
+    }
+
+    /* Make sure the search form aligns with the navbar items */
+.navbar .navbar-collapse form {
+    display: flex;
+    align-items: center;  /* vertical center */
+    margin-top: 0 !important; /* reset inline offset */
+    margin-bottom: 0 !important;
+}
+
+
+</style>
+<body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
 
     <header id="header">
@@ -87,7 +92,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
                         <!-- Powered by Algolia inside input -->
                         <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-           display: flex; align-items: center; font-size: 0.8rem; color: #6c757d;">
+                          display: flex; align-items: center; font-size: 0.8rem; color: #6c757d;">
                             <a href="https://www.algolia.com" target="_blank"
                                 style="text-decoration: none; color: #6c757d; font-size: 0.8rem; display: flex; align-items: center;">
                                 Powered by
@@ -107,10 +112,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/login']) ?>">Log
                                     in</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="btn btn-outline-primary ms-2" style="margin-right:10px;"
-                                    href="<?= Yii::$app->urlManager->createUrl(['users/sign-up']) ?>">Create account</a>
-                            </li>
+                                    href="< ?= Yii::$app->urlManager->createUrl(['users/sign-up']) ?>">Create account</a>
+                            </li> -->
                         <?php else: ?>
 
                             <li class="nav-item">
@@ -175,38 +180,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </nav>
     </header>
 
+
     <main id="main" class="flex-shrink-0" role="main" style="margin-top: 80px;">
         <div class="container">
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </main>
-
-    <footer id="footer" class="mt-auto py-3" style="background-color:#2C3E50 !important;">
-        <div class="container">
-            <div class="row text-muted align-items-center">
-                <div class="col-md-4 text-center text-md-start" style="color: #ECF0F1">&copy; dev <?= date('Y') ?></div>
-                <div class="col-md-4 text-center">
-                    <nav class="nav-menu-container" role="navigation">
-                        <ul id="footer-menu" class="nav justify-content-center">
-                            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Disclaimer</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-md-4 text-center text-md-end" style="text-align: right;">
-                    <p style="color: #ECF0F1; margin-bottom: 0;"> Powered by
-                        <a href="https://www.algolia.com/developers?utm_source=devto&utm_medium=referral"
-                            target="_blank" style="text-decoration: none; color: #ECF0F1;">
-                            Algolia
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
 
     <?php $this->endBody() ?>
 

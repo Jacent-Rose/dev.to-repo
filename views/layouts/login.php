@@ -17,6 +17,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => $this->params['met
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>" class="h-100">
+
+
+<title><?= Html::encode($this->title) ?></title>
+<?php $this->head() ?>
 
 <style>
     .dropdown-toggle::after {
@@ -36,23 +43,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     margin-bottom: 0 !important;
 }
 
-.footer > .container {
-    margin-top: 50px !important;  /* space inside footer container */
-}
-
-
 </style>
 
-<?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
-
-
-<title><?= Html::encode($this->title) ?></title>
-<?php $this->head() ?>
-
-
-<body class="d-flex flex-column h-50">
+<body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
 
     <header id="header">
@@ -87,7 +80,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
                         <!-- Powered by Algolia inside input -->
                         <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-           display: flex; align-items: center; font-size: 0.8rem; color: #6c757d;">
+                          display: flex; align-items: center; font-size: 0.8rem; color: #6c757d;">
                             <a href="https://www.algolia.com" target="_blank"
                                 style="text-decoration: none; color: #6c757d; font-size: 0.8rem; display: flex; align-items: center;">
                                 Powered by
@@ -103,10 +96,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <!-- Right Side -->
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <?php if (Yii::$app->user->isGuest): ?>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/login']) ?>">Log
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="< ?= Yii::$app->urlManager->createUrl(['site/login']) ?>">Log
                                     in</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="btn btn-outline-primary ms-2" style="margin-right:10px;"
                                     href="<?= Yii::$app->urlManager->createUrl(['users/sign-up']) ?>">Create account</a>
@@ -117,7 +110,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <a class="btn btn-outline-primary ms-2" style="margin-right:35px;"
                                     href="<?= Yii::$app->urlManager->createUrl(['articles/create-posts']) ?>">Create Post</a>
                             </li>
-
                             <li class="nav-item">
                                 <form method="post" action="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>">
                                     <?= Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken()) ?>
@@ -175,38 +167,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </nav>
     </header>
 
+
     <main id="main" class="flex-shrink-0" role="main" style="margin-top: 80px;">
         <div class="container">
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </main>
-
-    <footer id="footer" class="mt-auto py-3" style="background-color:#2C3E50 !important;">
-        <div class="container">
-            <div class="row text-muted align-items-center">
-                <div class="col-md-4 text-center text-md-start" style="color: #ECF0F1">&copy; dev <?= date('Y') ?></div>
-                <div class="col-md-4 text-center">
-                    <nav class="nav-menu-container" role="navigation">
-                        <ul id="footer-menu" class="nav justify-content-center">
-                            <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Disclaimer</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-md-4 text-center text-md-end" style="text-align: right;">
-                    <p style="color: #ECF0F1; margin-bottom: 0;"> Powered by
-                        <a href="https://www.algolia.com/developers?utm_source=devto&utm_medium=referral"
-                            target="_blank" style="text-decoration: none; color: #ECF0F1;">
-                            Algolia
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
 
     <?php $this->endBody() ?>
 

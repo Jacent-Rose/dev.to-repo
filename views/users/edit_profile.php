@@ -19,14 +19,23 @@ use yii\helpers\Url;
     }
 
     .edit-profile-container h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
         text-align: center;
-        margin-bottom: 30px;
-        color: #333;
     }
 
-    .form-field {
-        margin-bottom: 20px;
-    }
+    .form-field label {
+  font-size: 0.9rem;       /* smaller text */
+  font-weight: 500;        /* lighter than bold */
+  color: #444;             /* softer gray */
+  margin-bottom: 4px;      /* tight spacing */
+  display: block;
+}
+
+.form-field{
+  margin-bottom: 10px;
+}
 
     .required label:after {
         content: " *";
@@ -34,13 +43,13 @@ use yii\helpers\Url;
     }
 
     .btn-primary {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
+        background-color: #3b49df;
+    border-radius: 8px;
+    font-weight: 400;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: none;
+    transition: background-color 0.3s ease;
     }
 
     .btn-primary:hover {
@@ -48,18 +57,19 @@ use yii\helpers\Url;
     }
 
     .profile-image-preview {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 15px;
-    }
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px; /* center the image */
+}
 
-    .profile-image-preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.profile-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 </style>
 
 <div class="edit-profile-container">
@@ -70,25 +80,37 @@ use yii\helpers\Url;
         'options' => ['enctype' => 'multipart/form-data'],
     ]); ?>
 
-    <div class="form-field">
+    <!-- <div class="form-field">
+        < ?php if (!empty($user->profile_picture)): ?>
+                <img src="< ?= Url::to(['web/' . $user->profile_picture]) ?>" alt="Profile Picture">
+            < ?php else: ?>
+                <img src="< ?= Url::to(['web/images/default.jpg']) ?>" class="" alt="Default">
+            < ?php endif; ?>
+        < ?= $form->field($user, 'profile_picture')->fileInput()->label('Update Profile Image') ?>
+    </div> -->
+    <div class="form-field text-center">
+    <div class="profile-image-preview">
         <?php if (!empty($user->profile_picture)): ?>
-                <img src="<?= Url::to(['web/' . $user->profile_picture]) ?>" alt="Profile Picture">
-            <?php else: ?>
-                <img src="<?= Url::to(['web/images/default.jpg']) ?>" class="" alt="Default">
-            <?php endif; ?>
-        <?= $form->field($user, 'profile_picture')->fileInput()->label('Update Profile Image') ?>
+            <img src="<?= Url::to(['web/' . $user->profile_picture]) ?>" alt="Profile Picture">
+        <?php else: ?>
+            <img src="<?= Url::to(['web/images/default.jpg']) ?>" alt="Default">
+        <?php endif; ?>
+    </div>
+
+    <?= $form->field($user, 'profile_picture')->fileInput()->label('Update Profile Image') ?>
+</div>
+
+
+<div class="form-field">
+      <?= $form->field($user, 'name')->textInput(['Full name'])->label('Full name') ?>
     </div>
 
     <div class="form-field">
-        <?= $form->field($user, 'name')->textInput(['placeholder' => 'Your Name']) ?>
+      <?= $form->field($user, 'username')->textInput(['Username'])->label('Username') ?>
     </div>
 
     <div class="form-field">
-        <?= $form->field($user, 'username')->textInput(['placeholder' => 'Username']) ?>
-    </div>
-
-    <div class="form-field">
-        <?= $form->field($user, 'email')->input('email', ['placeholder' => 'Email']) ?>
+      <?= $form->field($user, 'email')->input('email', ['Email'])->label('Email') ?>
     </div>
 
     <div class="form-group">
