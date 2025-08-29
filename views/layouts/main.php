@@ -28,19 +28,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         background-color: transparent !important;
     }
 
-    /* Make sure the search form aligns with the navbar items */
-.navbar .navbar-collapse form {
-    display: flex;
-    align-items: center;  /* vertical center */
-    margin-top: 0 !important; /* reset inline offset */
-    margin-bottom: 0 !important;
-}
+    .navbar .navbar-collapse form {
+        display: flex;
+        align-items: center;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
 
-.footer > .container {
-    margin-top: 50px !important;  /* space inside footer container */
-}
-
-
+    .footer>.container {
+        margin-top: 50px !important;
+    }
 </style>
 
 <?php $this->beginPage() ?>
@@ -73,19 +70,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
                 <!-- Navbar content -->
                 <div class="collapse navbar-collapse" id="navbarContent">
-                    <!-- Centered Search Bar -->
+                    <!-- Search Bar -->
                     <form class="d-flex mx-auto" action="<?= Yii::$app->urlManager->createUrl(['site/search']) ?>"
                         method="get" style="width: 80%; position: relative;">
 
-                        <!-- Search icon inside input -->
+
                         <i class="fas fa-search"
                             style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888;"></i>
 
-                        <!-- Input with extra padding to fit icons/text -->
-                        <input type="search" name="q" class="form-control" placeholder="Search..."
-                            style="padding-left: 35px; padding-right: 140px;"> <!-- adjust right padding -->
 
-                        <!-- Powered by Algolia inside input -->
+                        <input type="search" name="q" class="form-control" placeholder="Search..."
+                            style="padding-left: 35px; padding-right: 140px;">
+
                         <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
            display: flex; align-items: center; font-size: 0.8rem; color: #6c757d;">
                             <a href="https://www.algolia.com" target="_blank"
@@ -115,7 +111,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
                             <li class="nav-item">
                                 <a class="btn btn-outline-primary ms-2" style="margin-right:35px;"
-                                    href="<?= Yii::$app->urlManager->createUrl(['articles/create-posts']) ?>">Create Post</a>
+                                    href="<?= Yii::$app->urlManager->createUrl(['articles/create-posts']) ?>">Create
+                                    Post</a>
                             </li>
 
                             <li class="nav-item">

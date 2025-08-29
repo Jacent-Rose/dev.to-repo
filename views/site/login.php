@@ -31,27 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         background: #fff;
         border-radius: 12px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        /* margin-top: 0px !important; */
     }
 
-    /* 1) Override the layout's inline margin on #main just for this page */
     #main {
         margin-top: 56px !important;
-        /* was 80px — set near your navbar height */
     }
 
-    /* 2) Stop vertical centering; pin the form nearer the top */
     .site-login {
         height: auto !important;
-        /* undo 100vh if you like */
         min-height: calc(100vh - 56px);
-        /* keep page tall enough under navbar */
         display: flex;
         justify-content: center;
-        align-items: flex-start !important;
-        /* move form to the top */
         padding-top: 40px;
-        /* small breathing room */
     }
 
     .auth-title {
@@ -123,39 +114,36 @@ $this->params['breadcrumbs'][] = $this->title;
     textarea:focus,
     select:focus {
         outline: none !important;
-        /* removes the default blue outline */
         box-shadow: none !important;
-        /* removes the blue shadow */
         border-color: #80bdff;
-        /* optional: you can set a custom border color */
     }
 
     .form-field label {
-  font-size: 0.9rem;       /* smaller text */
-  font-weight: 500;        /* lighter than bold */
-  color: #444;             /* softer gray */
-  margin-bottom: 4px;      /* tight spacing */
-  display: block;
-}
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #444;
+        margin-bottom: 4px;
+        display: block;
+    }
 
-    /* Make the checkbox smaller */
     #login-form .form-check-input {
         width: 10px !important;
         height: 10px !important;
         margin-top: 2.8px !important;
         margin-right: 6px !important;
     }
+
     .mb-3.field-loginform-rememberme label {
-    font-size: 4px !important;   /* change number as you like */
-}
-.form-field label::after {
-    content: " *"; /* add asterisk */
-    color: red;
-    margin-left: 2px;
-    font-weight: 500;
-}
+        font-size: 4px !important;
+    }
 
-
+    .form-field label::after {
+        content: " *";
+        /* add asterisk */
+        color: red;
+        margin-left: 2px;
+        font-weight: 500;
+    }
 </style>
 
 

@@ -63,7 +63,7 @@ class UsersController extends Controller
 
         $articles = $user->articles; // Get user's articles
         $comments = $user->getComments()->count(); // Number of comments written
-        $likes = []; // Fetch this if implemented
+        $likes = [];
 
         return $this->render('view_users', [
             'user' => $user,
@@ -82,7 +82,7 @@ class UsersController extends Controller
 
     public function actionResendEmail()
     {
-        $model = new Users(); // or create a dedicated form model if needed
+        $model = new Users();
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $user = Users::findOne(['email' => $model->email]);
@@ -125,7 +125,7 @@ class UsersController extends Controller
             $profileImage = UploadedFile::getInstance($user, 'profile_picture');
 
             if ($profileImage) {
-                // A new image was uploaded
+                // A new image upload
                 $imagePath = '/uploads/' . Yii::$app->security->generateRandomString() . '.' . $profileImage->extension;
                 if ($profileImage->saveAs(Yii::$app->basePath . '/web' . $imagePath)) {
                     // Delete the old image if it's not the default

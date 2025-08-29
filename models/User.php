@@ -51,37 +51,37 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email', 'password', 'name'], 'required'],
             [['bio'], 'string'],
             [['created_at'], 'safe'],
-            [['username', 'email', 'password', 'verification_token' , 'password_confirmation', 'profile_picture'], 'string', 'max' => 255],
+            [['username', 'email', 'password', 'verification_token', 'password_confirmation', 'profile_picture'], 'string', 'max' => 255],
             [['contact'], 'string', 'max' => 15],
             [['email'], 'unique'],
             [['email'], 'email', 'message' => 'Enter a valid email address.'],
             [['username'], 'unique'],
             [['username', 'email', 'password', 'password_confirmation'], 'required', 'message' => 'This field cannot be empty.'],
 
-            // **Username Validation**
+            //Username Validation
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9_]+$/', 'message' => 'Username can only contain letters, numbers, and underscores.'],
             ['username', 'string', 'min' => 3, 'max' => 25, 'tooShort' => 'Username must be at least 3 characters.', 'tooLong' => 'Username cannot be longer than 25 characters.'],
             ['username', 'unique', 'targetClass' => '\app\models\Users', 'targetAttribute' => 'username', 'message' => 'This username is already taken.'],
 
-            // **Email Validation**
+            //Email Validation
             ['email', 'email', 'message' => 'Enter a valid email address.'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\Users', 'targetAttribute' => 'email', 'message' => 'An account with this email already exists.'],
 
-            // **Password Validation**
+            //Password Validation
             ['password', 'string', 'min' => 8, 'tooShort' => 'Password must be at least 8 characters.'],
             ['password', 'match', 'pattern' => '/[A-Z]/', 'message' => 'Password must contain at least one uppercase letter.'],
             ['password', 'match', 'pattern' => '/[a-z]/', 'message' => 'Password must contain at least one lowercase letter.'],
             ['password', 'match', 'pattern' => '/[0-9]/', 'message' => 'Password must contain at least one number.'],
             ['password', 'match', 'pattern' => '/[\W_]/', 'message' => 'Password must contain at least one special character (e.g., @, #, $).'],
 
-            // **Password Confirmation**
+            // Password Confirmation
             ['password_confirmation', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match.'],
             [['name'], 'match', 'pattern' => '/^[a-zA-Z\s]+$/', 'message' => 'Only letters and spaces are allowed.'],
         ];
 
         return [
-            // your existing rules...
+
             [['reCaptcha'], ReCaptchaValidator2::class, 'secret' => Yii::$app->params['recaptchaSecretKey'], 'uncheckedMessage' => 'Please confirm that you are not a bot.'],
         ];
     }
@@ -126,12 +126,12 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Handle splitting full name into first and last name
      */
-    
+
 
     /**
      * {@inheritdoc}
      */
-    
+
 
     // Relations with other models (Articles, Comments, etc.)
     public function getArticles()
@@ -203,6 +203,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return Yii::getAlias('web/') . ($this->profile_picture ?: '/images/default.jpg');
     }
-    
+
 
 }

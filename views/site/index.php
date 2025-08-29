@@ -226,7 +226,9 @@ $this->registerCssFile('@web/web/css/site-index.css', [
             </div>
         </div>
 
+        
         <div class="right-sidebar">
+
             <!-- What's happening this week -->
             <div class="sidebar-content">
                 <div class="card-header">What's happening this week</div>
